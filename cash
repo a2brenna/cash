@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+SOURCE="$1"
+HASH=$(sha256sum $SOURCE | awk '{ print $1; }')
+
+g++ "$SOURCE" -o /tmp/"$HASH" 1>&2
+
+/tmp/"$HASH"
+
+rm /tmp/"$HASH"

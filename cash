@@ -2,9 +2,12 @@
 
 SOURCE="$1"
 HASH=$(sha256sum $SOURCE | awk '{ print $1; }')
+CACHE_DIR="/tmp"
 
-tail -n+2 "$SOURCE" | g++ -x c++ -o /tmp/"$HASH" - 1>&2
+if [ ! -f "$CACHE_DIR"/"$HASH" ]
+then
+    head -n 1 "$SOURCE" | grep '#!/.*cash' >& /dev/null && \
+        tail -n+2 "$SOURCE" | g++ -x c++ -o "$CACHE_DIR"/"$HASH" - 1>&2
+fi
 
-/tmp/"$HASH"
-
-rm /tmp/"$HASH"
+"$CACHE_DIR"/"$HASH"

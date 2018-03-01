@@ -7,7 +7,7 @@ CACHE_DIR="/tmp"
 if [ ! -f "$CACHE_DIR"/"$HASH" ]
 then
     head -n 1 "$SOURCE" | grep '#!/.*cash' >& /dev/null && \
-        tail -n+2 "$SOURCE" | g++ -x c++ -o "$CACHE_DIR"/"$HASH" - 1>&2
+        tail -n+2 "$SOURCE" | g++ -x c++ -O4 -o "$CACHE_DIR"/"$HASH" - 1>&2
 fi
 
 "$CACHE_DIR"/"$HASH"
